@@ -1,0 +1,243 @@
+name: "Almost Egomotion Paper CNN"
+
+layer{
+  name "flow_images"
+  type: "FlowData"
+  top: "image_data"
+  image_data_param{
+    source: "train.txt"
+    batch_size: 4
+    new_height: 376
+    new_width: 1241
+  }
+}
+
+layer{
+  name: "regression_vals"
+  type: "HDF5Data"
+  top: "distances"
+  top: "rot_r"
+  hdf5_data_param{
+    source: "train_gt.txt"
+    batch_size: 4
+  }
+}
+
+layer{
+  name: "downsample"
+  type: "Pooling"
+  bottom: "image_data"
+  top: "image_data_s"
+  pooling_param{
+    kernel_size: 8
+    stride: 8
+    pool: AVE
+  }
+}
+
+layer{
+  name: "conv1"
+  type: "Convolution"
+  bottom: "image_data_s"
+  top: "conv1"
+  param{
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param{
+    lr_mult: 1
+    decay_mult: 0
+  }
+  convolution_param{
+    num_output: 64
+    kernel_size: 9
+    stride: 1
+    pad: 4
+    weight_filler{
+      type: "msra"
+    }
+    bias_filler{
+      type: "constant"
+    }
+  }
+}
+layer{
+  name: "relu1"
+  type: "ReLU"
+  bottom: "conv1"
+  top: "conv1"
+}
+layer{
+  name: "pool1"
+  type: "Pooling"
+  bottom: "conv1"
+  top: "pool1"
+  pooling_param{
+    pool: MAX
+    kernel_size: 4
+    stride: 4
+  }
+}
+
+layer{
+  name: "conv2"
+  type: "Convolution"
+  bottom: "pool1"
+  top: "conv2"
+  param{
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param{
+    lr_mult: 1
+    decay_mult: 0
+  }
+  convolution_param{
+    num_output: 20
+    kernel_size: 2
+    stride: 1
+    pad: 1
+    weight_filler{
+      type: "msra"
+    }
+    bias_filler{
+      type: "constant"
+    }
+  }
+}
+layer{
+  name: "relu2"
+  type: "ReLU"
+  bottom: "conv2"
+  top: "conv2"
+}
+layer{
+  name: "pool2"
+  type: "Pooling"
+  bottom: "conv2"
+  top: "pool2"
+  pooling_param{
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+
+
+layer{
+  name: "flat1"
+  type: "Flatten"
+  bottom: "pool1"
+  top: "pool1_f"
+}
+layer{
+  name: "flat2"
+  type: "Flatten"
+  bottom: "pool2"
+  top: "pool2_f"
+}
+
+layer{
+  name: "merge"
+  type: "Concat"
+  bottom: "pool1_f"
+  bottom: "pool2_f"
+  top: "merge"
+}
+
+layer{
+  name: "fc1"
+  type: "InnerProduct"
+  bottom: "merge"
+  top: "fc1"
+  param{
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param{
+    lr_mult: 1
+    decay_mult: 0
+  }
+  inner_product_param{
+    num_output: 1024
+    weight_filler{
+      type: "msra"
+    }
+    bias_filler{
+      type: "constant"
+    }
+  }
+}
+
+layer{
+  name: "relu10"
+  type: "ReLU"
+  bottom: "fc1"
+  top: "fc1"
+}
+
+layer{
+  name: "output_distance"
+  type: "InnerProduct"
+  bottom: "fc1"
+  top: "out_dist"
+  param{
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param{
+    lr_mult: 1
+    decay_mult: 0
+  }
+  inner_product_param{
+    num_output: 1
+    weight_filler{
+      type: "msra"
+    }
+    bias_filler{
+      type: "constant"
+    }
+  }
+}
+
+layer{
+  name: "output_rotation"
+  type: "InnerProduct"
+  bottom: "fc1"
+  top: "out_rot"
+  param{
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param{
+    lr_mult: 1
+    decay_mult: 0
+  }
+  inner_product_param{
+    num_output: 1
+    weight_filler{
+      type: "msra"
+    }
+    bias_filler{
+      type: "constant"
+    }
+  }
+}
+
+layer{
+  name: "dist_loss"
+  type: "EuclideanLoss"
+  bottom: "distances"
+  bottom: "out_dist"
+  top: "dist_loss"
+}
+
+layer{
+  name: "rot_loss"
+  type: "EuclideanLoss"
+  bottom: "rot_r"
+  bottom: "out_rot"
+  top: "rot_loss"
+}
+
+

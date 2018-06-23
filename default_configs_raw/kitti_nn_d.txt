@@ -1,0 +1,11 @@
+/home/pmm5983/caffe_flow_kitti/gt/kitti_00_d.h5
+/home/pmm5983/caffe_flow_kitti/gt/kitti_01_d.h5
+/home/pmm5983/caffe_flow_kitti/gt/kitti_02_d.h5
+/home/pmm5983/caffe_flow_kitti/gt/kitti_03_d.h5
+/home/pmm5983/caffe_flow_kitti/gt/kitti_04_d.h5
+/home/pmm5983/caffe_flow_kitti/gt/kitti_05_d.h5
+/home/pmm5983/caffe_flow_kitti/gt/kitti_06_d.h5
+/home/pmm5983/caffe_flow_kitti/gt/kitti_07_d.h5
+/home/pmm5983/caffe_flow_kitti/gt/kitti_08_d.h5
+/home/pmm5983/caffe_flow_kitti/gt/kitti_09_d.h5
+/home/pmm5983/caffe_flow_kitti/gt/kitti_10_d.h5
