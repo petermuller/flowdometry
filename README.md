@@ -1,6 +1,6 @@
 # thesis_code
 
-These are all the files associated with my thesis as organized as I can get them. The files are here to have them open-sourced, but they will not run out of the box. The KITTI dataset is used but there are many hardcoded references to where it was saved in the research cluster I used at RIT.
+These are all the files associated with my thesis as organized as I can get them. The files are here to have them open-sourced, but they will not run out of the box. The KITTI dataset is used but there are many hardcoded references to where it was saved in the research cluster I used at RIT. You can download my thesis here: http://scholarworks.rit.edu/theses/9316/
 
 ## Directories
 
