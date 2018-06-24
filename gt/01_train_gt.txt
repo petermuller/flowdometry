@@ -1,0 +1,2 @@
+/home/pmm5983/kitti_flow_data/gt/kitti_01_d.h5
+/home/pmm5983/kitti_flow_data/gt/kitti_01_d_r.h5

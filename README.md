@@ -16,6 +16,10 @@ Caffe model (model_train.prototxt) and supporting parameters for training the mo
 
 The FlowNet package that was used for grabbing the visual odometry layers in the Caffe model.
 
+### gt
+
+Ground truth values for training the network. The dataset itself is all the flow images generated from the KITTI dataset using the FlowNet architecture. That would be 166 GB, so it wasn't included here. The ground truth values included are the rotations and displacements as calculated from the incremental changes in ground truth values from the KITTI dataset. These ground truth databases also include the reverse direction because I trained the models on the vertically mirrored images (displacement stays the same, but the angle is negated). The train_gt.txt file is the file used for training the models.
+
 ### kitti_evaluation
 
 Custom source files for evaluating individual paths in the KITTI dataset instead of evaluating the entire dataset.
