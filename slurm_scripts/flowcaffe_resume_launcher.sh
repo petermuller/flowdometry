@@ -45,4 +45,4 @@ caffe train --solver=solver.prototxt --weights=weights.caffemodel
 #python read_db.py net_out
 
 echo "(${HOSTNAME}) Done" 
-#echo "Job ${SLURM_JOB_ID} Finished" | mail -s "Job Finished" -r "stickman221@gmail.com" pmm5983@rit.edu
+#echo "Job ${SLURM_JOB_ID} Finished" | mail -s "Job Finished" -r "pmm5983@rit.edu" pmm5983@rit.edu
